@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="main-game">
+        <div class="game">
+            <div class="game-area">
+                <button class="btn btn-one game-btn"></button>
+                <button class="btn btn-two game-btn"></button>
+                <button class="btn btn-three game-btn"></button>
+                <button class="btn btn-four game-btn"></button>
+                <button class="btn btn-five game-btn"></button>
+                <button class="btn btn-six game-btn"></button>
+                <button class="btn btn-seven game-btn"></button>
+                <button class="btn btn-eight game-btn"></button>
+                <button class="btn btn-nine game-btn"></button>
+            </div>
+            <div class="player-area">
+                <iframe id="dzplayer" dztype="dzplayer" src="http://developers.deezer.com/us/plugins/player?playlist=true&width=700&height=240&autoplay=false&type=playlist&id=30595446" scrolling="no" frameborder="0" style="border:none; overflow:hidden;" width="700" height="240" allowTransparency="true"></iframe>
+            </div>
+        </div>
+        <div class="footer"></div>
+    </div>
+{% endblock %}

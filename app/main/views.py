@@ -11,3 +11,13 @@ def index():
     title = "TicTacToe"
 
     return render_template('index.html', title = title)
+
+@main.route('/game/')
+def game():
+    '''
+    Game page
+    '''
+
+    title = "TicTacToe"
+
+    return render_template('game.html', title = title)
