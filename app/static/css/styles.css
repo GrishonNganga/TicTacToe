@@ -21,10 +21,11 @@
     /*---Position---*/
     /*position: absolute;*/
     padding: 20px;
-    margin: auto;
+    margin: 0 auto;
     top: 50%;
     left: 50%;
     width: 60%;
+    height: 80%;
     /*transform: translate(-50%, -50%);*/
     z-index: 123;
 }
