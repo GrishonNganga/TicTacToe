@@ -1,4 +1,4 @@
-#!/home/miro/Documents/moringa/TicTacToe/virtual/bin/python
+#!/home/lalu/FOLDERS/Moringa-core/IP/TicTacToe/virtual/bin/python
 
 import sys
 from os.path import join, dirname, exists
