@@ -1,1 +1,1 @@
-python3 manage.py server
+python manage.py server
