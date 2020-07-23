@@ -20,10 +20,9 @@ def index():
         return render_template('index.html', title = title, form=form)
 
 
-@main.route('/search/<search_song>')
+@main.route('/search/<search_song>',methods=['GET','POST'])
 def tafuta(search_song):
     form = SearchSong()
-    search_song = form.search_item.data
     song_name = search(search_song)
 
     print(song_name)
