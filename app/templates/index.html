@@ -1,11 +1,10 @@
 {% extends 'base.html' %} {% import 'macros.html' as macro %} {% import 'bootstrap/wtf.html' as wtf%}
 <!-- content -->
 {% block content %}
-<<<<<<< HEAD
 <div class="container-fluid">
     {{wtf.quick_form(form)}} {% for item in song_name %}
     <div data-video='{{item}}' data-autoplay="0" data-loop="1" id="youtube-audio">
-=======
+        
     <div class="container-fluid">
         <div class="jumbotron">
             <h1 class="display-3">Hello, world!</h1>
@@ -18,7 +17,6 @@
             <a class="btn btn-primary btn-lg" href="{{ url_for('main.game') }}" role="button">Play Game</a>
             </p>
         </div>
->>>>>>> refactor-all-features
     </div>
     {% endfor %}
     <script src="https://www.youtube.com/iframe_api"></script>
