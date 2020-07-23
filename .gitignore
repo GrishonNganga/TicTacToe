@@ -1,3 +1,7 @@
 __pycache__
-*.pyc
+virtual/
+instance/
+start.sh
 virt/
+*.pyc
+__pycache__/
