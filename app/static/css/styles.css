@@ -1,3 +1,69 @@
+/*------Header styling------*/
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: url('https://c4.wallpaperflare.com/wallpaper/344/600/939/tic-tac-toe-game-wallpaper-preview.jpg') no-repeat;
+    background-size: cover;
+    z-index: 0;
+}
+
+.navbar {
+    opacity: 0.3;
+}
+
+.navbar a {
+    color: white;
+}
+
+/*------Index Styling------*/
+.cont {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #00000030;
+}
+
+.play-btn {
+    position: absolute;
+    width: 25%;
+    height: auto;
+    padding: 20px;
+    margin: 0 auto;
+    top: 50%;
+    z-index: 12;
+    color: white !important;
+    font-size: larger !important;
+    font-weight: bold !important;
+    font-size: 2em;
+    border-radius: 20px;
+    background: orangered;
+    box-shadow: 0px 10px 15px 4px rgba(0, 0, 0, 0.75);
+    animation-name: pulse;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes pulse {
+    0% {
+        background-color: #FF4500;
+        transform: scale(1.0);
+    }
+
+    50% {
+        background-color: #4500FF;
+        transform: scale(1.05);
+    }
+
+    100% {
+        background-color: #00BAFF;
+        transform: scale(1.1);
+    }
+}
+
 /*------Game styling------*/
 .main-game {
     height: 100%;
@@ -14,7 +80,7 @@
     justify-content: center;
     border: 2px solid #00000050;
     border-radius: 15px;
-    box-shadow: 0px 10px 19px 5px rgba(0,0,0,0.75);
+    box-shadow: 0px 10px 19px 5px rgba(0, 0, 0, 0.75);
 
     margin: 30px;
 
@@ -33,18 +99,18 @@
 .game-area {
     display: grid;
     grid-template-columns: auto auto auto;
-    width: 300px;
-    height: 300px;
-    max-width: 300px;
-    max-height: 300px;
+    width: auto;
+    height: auto;
     margin: 20px auto;
     border: 1px solid #00000050;
     border-radius: 25px;
+    padding: 30px;
+    background: #00000050;
 }
 
 .game-btn {
-    background: blue !important;
-    border: 1px solid red !important;
+    background: #19B1FF !important;
+    border: none;
     border-radius: 15px;
     margin: 2px;
     transition: all 0.5s;
@@ -55,7 +121,7 @@
 
 .game-btn:hover {
     transform: scale(1.1);
-    background: #34e1ff !important;
+    background: #2645FF !important;
 }
 
 .player-area {
