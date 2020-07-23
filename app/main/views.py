@@ -23,7 +23,6 @@ def index():
 @main.route('/search/<search_song>')
 def tafuta(search_song):
     form = SearchSong()
-    search_song = form.search_item.data
     song_name = search(search_song)
 
     print(song_name)
