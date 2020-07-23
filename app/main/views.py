@@ -26,5 +26,19 @@ def tafuta(search_song):
     search_song = form.search_item.data
     song_name = search(search_song)
 
+<<<<<<< HEAD
     print(song_name)
     return render_template('index.html', song_name=song_name, form=form)
+=======
+    return render_template('index.html', title = title)
+
+@main.route('/game/')
+def game():
+    '''
+    Game page
+    '''
+
+    title = "TicTacToe"
+
+    return render_template('game.html', title = title)
+>>>>>>> refactor-all-features

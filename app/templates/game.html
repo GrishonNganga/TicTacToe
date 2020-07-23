@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<head>
+    <style>
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<div class="main-game">
+    <div class="game">
+        <div class="game-area">
+            <button class="btn btn-one game-btn"></button>
+            <button class="btn btn-two game-btn"></button>
+            <button class="btn btn-three game-btn"></button>
+            <button class="btn btn-four game-btn"></button>
+            <button class="btn btn-five game-btn"></button>
+            <button class="btn btn-six game-btn"></button>
+            <button class="btn btn-seven game-btn"></button>
+            <button class="btn btn-eight game-btn"></button>
+            <button class="btn btn-nine game-btn"></button>
+        </div>
+        <div class="player-area">
+            <audio controls></audio>
+        </div>
+    </div>
+    <div class="footer"></div>
+</div>
+{% endblock %}
