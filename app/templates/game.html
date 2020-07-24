@@ -16,6 +16,7 @@
             console.log(data)
         })
         socket.on('other play', (data)=>{
+            $('.loader').hide()
             console.log(data)
         })
 
@@ -189,8 +190,10 @@
         {{url}}
 
     </div>
-    <div class="player-area">
-        
+    <div class="spinner-border text-warning loader" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    <div class="player-area">       
         <audio controls></audio>
     </div>
     <div class="footer"></div>
