@@ -26,6 +26,10 @@
             cell = data['spot']
             show = data['show']
             $(`.button${cell}`).html(show)
+            $(`.button${cell}`).css('font-size',' 90px')
+            $(`.button${cell}`).css('color','white')
+            $(`.button${cell}`).css('line-height','20px')
+            
         })
         socket.on('start', (data)=>{
             can_play = true
