@@ -156,8 +156,9 @@
 
         socket.on('draw', (data)=>{
             can_play = false
-            $('.show-error-txt').replaceWith('<p style="color:white;" background-color: "transparent;" ">GAME OVER! NO WINNER</p>')
-            $('.show-error').show()
+            $('.results').append('NO WINNER!!')
+            $(`.results`).css('color','white')
+            $(`.results`).css('font-size',' 24px')
         })
 
         socket.on('back home', ()=>{
