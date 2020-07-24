@@ -10,7 +10,6 @@ $(document).ready(()=>{
     })
 
     $('.send').click(()=>{
-        alert('Works')
         game_id = make_id()
         window.location.href = `/${game_id}`
        

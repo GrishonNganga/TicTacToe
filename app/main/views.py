@@ -23,7 +23,9 @@ def index():
 @main.route('/<id>')
 def create_game(id):
 
-    return render_template('game.html', game_id = id)
+    print('I am here.')
+    print(request.url)
+    return render_template('game.html', game_id = id, url = request.url)
 
 
 
