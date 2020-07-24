@@ -1,0 +1,116 @@
+/*------Game styling------*/
+*{
+    background-color: black;
+}
+
+.main-game {
+    height: 100%;
+    width: 100vw;
+    max-height: 100%;
+    max-width: 100vw;
+    overflow-y: hidden !important;
+    
+}
+
+.game {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* border: 2px solid #00000050; */
+    border-radius: 15px;
+    /* box-shadow: 0px 10px 19px 5px rgba(0,0,0,0.75); */
+
+    margin: 30px;
+
+    /*---Position---*/
+    /*position: absolute;*/
+    padding: 20px;
+    margin: 0 auto;
+    top: 50%;
+    left: 50%;
+    /* width: 60%;
+    height: 80%; */
+    /*transform: translate(-50%, -50%);*/
+    z-index: 123;
+    margin-top: 5%;
+    
+}
+
+.game-area {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    width: 300px;
+    height: 300px;
+    max-width: 300px;
+    max-height: 300px;
+    margin: 20px auto;
+    font-size: 60px;
+  
+    
+}
+
+.game-btn {
+    background: #3b79ff !important;
+    border: 1px solid #3b79ff !important;
+    border-radius: 15px;
+    margin: 2px;
+    transition: all 0.5s;
+    display: block;
+    width: 100px;
+    height: 100px;
+}
+.create-game{
+    margin-left: 42%;
+    margin-top: 30%;
+}
+
+.game-btn:hover, .create-game:hover {
+    transform: scale(1.1);
+    background: #ff8d3b !important;
+}
+.back a:hover{
+    color: #ff8d3b;
+}
+.share-link{
+    color: #3b79ff;
+    background-color: white;
+    margin-left: 33%;
+    width: 35%;
+    margin-top: 5%;
+    font-size: 20px;
+    text-align: center;
+    border-radius: 10px;
+    z-index: 20;
+    padding-top: 15px;
+    padding-bottom: 15px;
+
+}
+
+.back{
+    font-size: 48px;
+    color: white;
+    margin-left: 5%;
+    margin-top: 2%;
+    position: fixed;
+}
+
+.back a{
+    color: white;
+}
+
+.player-area {
+    margin: 20px auto;
+    height: 200px;
+    margin-left: 41%;
+    margin-top: 10%;
+}
+
+.show-error{
+    display: none;
+    position: fixed;
+    top: 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 24px;
+    text-align: center;
+}

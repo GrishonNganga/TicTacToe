@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+{{ super() }}
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <script>
+        var socket = io();
+        game_id = '{{game_id}}'
+        can_play = false
+        socket.on('connect', function() {
+            socket.emit('create game', {game_id: game_id});
+        });
+
+        socket.on('play', (data)=>{
+            console.log(data)
+        })
+        socket.on('other play', (data)=>{
+            console.log(data)
+        })
+
+        socket.on('spot picked', (data)=>{
+            
+            console.log(data)
+            cell = data['spot']
+            show = data['show']
+            $(`.button${cell}`).html(show)
+        })
+        socket.on('start', (data)=>{
+            can_play = true
+            console.log(data)
+            if (data['played']){
+                played_value = data['play']
+                $(`.button${played_value}`).removeClass('x-class')
+
+            }
+            $('.button1').click(()=>{
+                if(can_play){
+                    can_play = false
+                    btn_select = document.getElementById('button1')
+                    // btn_select.innerText = 'X'
+                    selected = 1
+                    socket.emit('played', {
+                        play: selected,
+                        game: game_id
+                    })
+                }
+            })
+            
+            $('.button2').click(()=>{
+                if (can_play){
+                    can_play = false
+                    selected = 2
+                    socket.emit('played', {
+                        play: selected,
+                        game: game_id
+                    })
+                }
+                
+            })
+            $('.button3').click(()=>{
+                if(can_play){
+                    can_play = false
+                    selected = 3
+                    socket.emit('played', {
+                        play: selected,
+                        game: game_id
+                    })
+                } 
+            })
+            $('.button4').click(()=>{
+                if (can_play){
+                    can_play = false
+                    selected = 4
+                    socket.emit('played', {
+                        play: selected,
+                        game: game_id
+                    })
+                }
+                
+            })
+            $('.button5').click(()=>{
+                if (can_play){
+                    can_play = false
+                    selected = 5
+                    socket.emit('played', {
+                        play: selected,
+                        game: game_id
+                    })
+                }
+                
+            })
+            $('.button6').click(()=>{
+                if (can_play){
+                    can_play = false
+                    selected = 6
+                    socket.emit('played', {
+                        play: selected,
+                        game: game_id
+                    })
+                }
+                
+            })
+            $('.button7').click(()=>{
+                if (can_play){
+                    can_play = false
+                    selected = 7
+                    socket.emit('played', {
+                        play: selected,
+                        game: game_id
+                    })
+                }
+                
+            })
+            $('.button8').click(()=>{
+                if (can_play){
+                    can_play = false
+                    selected = 8
+                    socket.emit('played', {
+                        play: selected,
+                        game: game_id
+                    })
+                }
+                
+            })
+            $('.button9').click(()=>{
+                if (can_play){
+                    can_play = false
+                    selected = 9
+                    socket.emit('played', {
+                        play: selected,
+                        game: game_id
+                    })
+                }
+                
+            })
+        })
+        
+        socket.on('won', (winneer)=>{
+            $('body').append(`Game over! you won!`)
+        })
+        socket.on('lost', (loser)=>{
+            $('body').append(`Game over! you lost!`)
+        })
+
+        socket.on('draw', (data)=>{
+            $('.show-error-txt').replaceWith('<p style="color:white;" background-color: "transparent;" ">GAME OVER! NO WINNER</p>')
+            $('.show-error').show()
+        })
+
+        socket.on('back home', ()=>{
+            window.location.href = `/`
+        })
+        socket.on('error', (data)=>{
+
+            console.log(data)
+        })
+    </script>
+{% endblock %}
+
+{% block content %}
+
+<head>
+    <style>
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<div class="main-game">
+    <div class="game">
+        <div class="alert alert-danger show-error">
+            <p class="show-error-txt"></p>
+        </div>
+        <div class="game-area">
+            <button class="btn button1 game-btn"></button>
+            <button class="btn button2 game-btn"></button>
+            <button class="btn button3 game-btn"></button>
+            <button class="btn button4 game-btn"></button>
+            <button class="btn button5 game-btn"></button>
+            <button class="btn button6 game-btn"></button>
+            <button class="btn button7 game-btn"></button>
+            <button class="btn button8 game-btn"></button>
+            <button class="btn button9 game-btn"></button>
+        </div>
+    </div>
+    
+    <div class="share-link">
+        http://127.0.0.1:5000/_e8kypkg3s
+
+    </div>
+    <div class="player-area">
+        
+        <audio controls></audio>
+    </div>
+    <div class="footer"></div>
+</div>
+{% endblock %}
