@@ -67,6 +67,10 @@ def create_game(data):
         rooms = json.dumps(all_rooms)
         emit('play', rooms,  room = user_id)
 
+@socketio.on('done')
+def gone(data):
+    print("Gone")
+
 @socketio.on('played')
 def play(data):
     if all_rooms.count(data['game']) > 0:
@@ -100,8 +104,8 @@ def play(data):
                             print(i)
                             emit('won', request.sid, room = request.sid)           
                             emit('lost', request.sid, room = other_user )
-                            break
-                    break     
+                            return
+
                 print(game)
                 other_player = None
                 for user in room_to_play['users']:
@@ -111,7 +115,7 @@ def play(data):
                             print('Game over for now.')
                             print(game)
                             emit('draw', room = room_to_play['id'])
-                            break
+                            return
                         emit('start',my_played_moves , room = user)
                         break
             else:
@@ -121,6 +125,7 @@ def play(data):
             emit('draw', room = room_to_play['id'])
             print('Game over for now.')
             print(game)
+            return
     else:
 
         #TODO Handle wrong game id -> (Wrong link)

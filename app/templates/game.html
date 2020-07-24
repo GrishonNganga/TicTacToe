@@ -142,13 +142,20 @@
         })
         
         socket.on('won', (winneer)=>{
-            $('body').append(`Game over! you won!`)
+            can_play = false
+            $('.results').append('Congrats!! You won!')
+            $(`.results`).css('color','green')
+            $(`.results`).css('font-size',' 24px')
         })
         socket.on('lost', (loser)=>{
-            $('body').append(`Game over! you lost!`)
+            can_play = false
+            $('.results').append('Boooo!! YOU LOST')
+            $(`.results`).css('color','red')
+            $(`.results`).css('font-size',' 24px')
         })
 
         socket.on('draw', (data)=>{
+            can_play = false
             $('.show-error-txt').replaceWith('<p style="color:white;" background-color: "transparent;" ">GAME OVER! NO WINNER</p>')
             $('.show-error').show()
         })
@@ -177,6 +184,10 @@
         <div class="alert alert-danger show-error">
             <p class="show-error-txt"></p>
         </div>
+        <div class="results">
+
+        </div>
+
         <div class="game-area">
             <button class="btn button1 game-btn"></button>
             <button class="btn button2 game-btn"></button>
@@ -189,7 +200,7 @@
             <button class="btn button9 game-btn"></button>
         </div>
     </div>
-    
+        
     <div class="share-link">
         {{url}}
 
