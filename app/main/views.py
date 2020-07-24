@@ -5,7 +5,7 @@ from .forms import SearchSong
 
 # from ..models import
 
-@main.route('/', methods=['GET','POST'])
+@main.route('/')
 def index():
     '''
     Homepage
@@ -18,6 +18,13 @@ def index():
         return redirect(url_for('.tafuta', search_song=search_song))
     else:
         return render_template('index.html', title = title, form=form)
+
+
+@main.route('/<id>')
+def create_game(id):
+
+    return render_template('game.html', game_id = id)
+
 
 
 @main.route('/search/<search_song>')

@@ -16,14 +16,15 @@ def create_app(config_name):
     # Extensions init
     bootstrap.init_app(app)
     socketio.init_app(app)
-
+    
     # Main blueprint
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
-    '''
-    Configure flask socket io events.
-    '''
+
+    #Configure flask socket io events.
+    from . import events
+    
 
     # Request config
     '''
