@@ -13,7 +13,7 @@ def search(song_title):
         'key' : api_key,
         'q' : song_title,
         'part' : 'snippet',
-        'maxResults' : 10
+        'maxResults' : 1
     }
     res = requests.get(search_url, params=search_parameters)
     results = res.json()['items']
