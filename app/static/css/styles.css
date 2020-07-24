@@ -1,6 +1,10 @@
 /*------Game styling------*/
-*{
-    background-color: black;
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+body {
+    background-image: url('/static/images/black.png');
+    background-size: 100% 100%;
+    /* color: #fff; */
 }
 
 .main-game {
@@ -9,7 +13,182 @@
     max-height: 100%;
     max-width: 100vw;
     overflow-y: hidden !important;
-    
+}
+
+.frame {
+    position: fixed;
+    top: 20px;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1022px;
+    height: 666px;
+    margin: 0 auto;
+    background-image: url('/static/images/frame.png');
+    background-size: 100% 100%;
+    -webkit-filter: grayscale(100%);
+    /* Chrome, Safari, Opera */
+    filter: grayscale(100%);
+    -webkit-box-shadow: -11px 17px 47px 17px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -11px 17px 47px 17px rgba(0, 0, 0, 0.75);
+    box-shadow: -11px 17px 47px 17px rgba(0, 0, 0, 0.75);
+    pointer-events: none;
+    z-index: 10;
+}
+
+.wrapper {
+    position: relative;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 540px;
+    min-width: 900px;
+    background-image: url('/static/images/blackboard.jpg');
+    background-size: 100% 100%;
+}
+
+#canvas {
+    width: 900px;
+    height: 540px;
+    margin: auto auto;
+    z-index: 9;
+}
+
+#oBg {
+    position: absolute;
+    top: 32px;
+    left: 16px;
+    width: 25%;
+    height: 21%;
+    z-index: -1;
+    opacity: 1;
+}
+
+#xBg {
+    position: absolute;
+    top: 22px;
+    right: 18px;
+    width: 25%;
+    height: 21%;
+    -webkit-transform: rotate(190deg);
+    -moz-transform: rotate(190deg);
+    -ms-transform: rotate(190deg);
+    -o-transform: rotate(190deg);
+    transform: rotate(190deg);
+    z-index: -1;
+}
+
+#banner {
+    position: absolute;
+    top: 22px;
+    left: 280px;
+    width: 360px;
+    height: 120px;
+    opacity: 0.8;
+    -webkit-filter: grayscale(100%);
+    /* Chrome, Safari, Opera */
+    filter: grayscale(100%);
+    -webkit-transform: rotate(10deg);
+    -moz-transform: rotate(10deg);
+    -ms-transform: rotate(10deg);
+    -o-transform: rotate(10deg);
+    transform: rotate(10deg);
+    z-index: -1;
+}
+
+#oSymbol {
+    position: absolute;
+    top: 46px;
+    left: 70px;
+    width: 86px;
+    height: 74px;
+    opacity: 0.95;
+    z-index: -1;
+}
+
+#xSymbol {
+    position: absolute;
+    top: 44px;
+    right: 76px;
+    width: 94px;
+    height: 80px;
+    opacity: 0.90;
+    background-size: 100% 100%;
+    -webkit-filter: grayscale(100%);
+    /* Chrome, Safari, Opera */
+    filter: grayscale(100%);
+    -webkit-transform: rotate(10deg);
+    -moz-transform: rotate(10deg);
+    -ms-transform: rotate(10deg);
+    -o-transform: rotate(10deg);
+    transform: rotate(10deg);
+    z-index: -1;
+}
+
+.visibility {
+    opacity: 0.9 !important;
+}
+
+#handOne {
+    position: absolute;
+    top: 180px;
+    left: 140px;
+    width: 120px;
+    height: 120px;
+    z-index: -1;
+    opacity: 0.5;
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    -ms-transform: scaleX(-1);
+    transform: scaleX(-1);
+    -ms-filter: "FlipH";
+    filter: FlipH;
+}
+
+#handTwo {
+    position: absolute;
+    bottom: 100px;
+    right: 85px;
+    width: 120px;
+    height: 120px;
+    z-index: -1;
+    opacity: 0.5;
+    -webkit-transform: rotate(30deg);
+    -moz-transform: rotate(30deg);
+    -ms-transform: rotate(30deg);
+    -o-transform: rotate(30deg);
+    transform: rotate(30deg);
+}
+
+.menu {
+    list-style-type: none;
+    color: white;
+    font-size: 52px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 280px !important;
+    font-weight: 100;
+    text-align: center;
+}
+
+.hl {
+    opacity: 0.7 !important;
+}
+
+li a {
+    display: inline-block;
+    margin-bottom: 50px;
+    opacity: 0.7;
+    color: #3b79ff;
+    font-family: 'Press Start 2P', cursive;
+}
+
+li a:hover {
+    cursor: pointer;
+    color: #ff8d3b;
 }
 
 .game {
@@ -19,9 +198,7 @@
     /* border: 2px solid #00000050; */
     border-radius: 15px;
     /* box-shadow: 0px 10px 19px 5px rgba(0,0,0,0.75); */
-
     margin: 30px;
-
     /*---Position---*/
     /*position: absolute;*/
     padding: 20px;
@@ -33,7 +210,6 @@
     /*transform: translate(-50%, -50%);*/
     z-index: 123;
     margin-top: 5%;
-    
 }
 
 .game-area {
@@ -44,8 +220,6 @@
     max-width: 300px;
     max-height: 300px;
     margin: 20px auto;
-  
-    
 }
 
 .game-btn {
@@ -58,19 +232,23 @@
     width: 100px;
     height: 100px;
 }
-.create-game{
+
+.create-game {
     margin-left: 42%;
     margin-top: 30%;
 }
 
-.game-btn:hover, .create-game:hover {
+.game-btn:hover,
+.create-game:hover {
     transform: scale(1.1);
     background: #ff8d3b !important;
 }
-.back a:hover{
+
+.back a:hover {
     color: #ff8d3b;
 }
-.share-link{
+
+.share-link {
     color: #3b79ff;
     background-color: white;
     margin-left: 33%;
@@ -82,10 +260,9 @@
     z-index: 20;
     padding-top: 15px;
     padding-bottom: 15px;
-
 }
 
-.back{
+.back {
     font-size: 48px;
     color: white;
     margin-left: 5%;
@@ -93,7 +270,7 @@
     position: fixed;
 }
 
-.back a{
+.back a {
     color: white;
 }
 

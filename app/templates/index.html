@@ -1,19 +1,37 @@
 {% extends 'base.html' %} {% import 'macros.html' as macro %} {% import 'bootstrap/wtf.html' as wtf%}
 <!-- content -->
 {% block content %}
-<div class="container-fluid">
+<div class="container">
+    <!-- <div class="container-fluid"> -->
     <!-- {{wtf.quick_form(form)}} 
     {% for item in song_name %}
     <div data-video='{{item}}' data-autoplay="0" data-loop="1" id="youtube-audio">
-        
-
     {% endfor %} -->
-  
-    <a class="btn btn-primary btn-lg create-game" href="{{ url_for('main.game') }}" role="button">Create Your Own Game</a>
 
-    
-    <script src="https://www.youtube.com/iframe_api"></script>
-    <script src="https://cdn.rawgit.com/labnol/files/master/yt.js"></script>
+    <!-- <a class="btn btn-primary btn-lg create-game" href="{{ url_for('main.game') }}" role="button">Create Your Own Game</a> -->
 
+    <div class="wrapper">
+        <img id="banner" src="{{url_for('static', filename = 'images/banner.png')}}">
+        <p> Tic Tac Toe</p>
+        <img id="oBg" src="{{url_for('static', filename = 'images/xoBg.png')}}">
+        <img id="oSymbol" src="{{url_for('static', filename = 'images/oSymbol.png')}}">
+        <img id="xBg" src="{{url_for('static', filename = 'images/xoBg.png')}}">
+        <img id="xSymbol" src="{{url_for('static', filename = 'images/xSymbol.png')}}">
+
+        <ul class="menu">
+            <li>
+                <a role="button" href="{{ url_for('main.game') }}">NEW GAME</a>
+            </li>
+        </ul>
+        <img id="handOne" src="{{url_for('static', filename = 'images/hand.png')}}">
+        <img id="handTwo" src="{{url_for('static', filename = 'images/hand.png')}}">
+
+        <div id="canvas"></div>
+    </div>
+    <div class="frame"></div>
 </div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="https://cdn.rawgit.com/labnol/files/master/yt.js"></script>
+
 {% endblock %}
