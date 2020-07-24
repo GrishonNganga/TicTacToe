@@ -5,7 +5,7 @@ from .forms import SearchSong
 
 # from ..models import
 
-@main.route('/', methods=['GET','POST'])
+@main.route('/')
 def index():
     '''
     Homepage
@@ -20,7 +20,14 @@ def index():
         return render_template('index.html', title = title, form=form)
 
 
-@main.route('/search/<search_song>',methods=['GET','POST'])
+@main.route('/<id>')
+def create_game(id):
+
+    return render_template('game.html', game_id = id)
+
+
+
+@main.route('/search/<search_song>')
 def tafuta(search_song):
     form = SearchSong()
     song_name = search(search_song)

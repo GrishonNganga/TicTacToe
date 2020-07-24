@@ -1,8 +1,10 @@
 from flask import Flask
 from config import config_options
 from flask_bootstrap import Bootstrap
+from flask_socketio import SocketIO
 
 bootstrap = Bootstrap()
+socketio = SocketIO()
 
 
 from flask import Blueprint
@@ -17,9 +19,12 @@ def create_app(config_name):
 
     # Initializing flak extensions
     bootstrap.init_app(app)
+    socketio.init_app(app)
+    
 
     # Registering the blueprint
     from ..main import main as main_blueprint # .main changed to ..main
     app.register_blueprint(main_blueprint)
+
 
     return app
