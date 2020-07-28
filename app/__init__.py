@@ -10,7 +10,9 @@ from config import config_options
 bootstrap = Bootstrap()
 socketio = SocketIO()
 redis_url = os.environ.get('REDIS_URL')
-red = Redis(host = redis_url, port = 15219, db = 0, decode_responses=True)
+print('This is the REDIS_URL')
+print(redis_url)
+red = Redis(host = redis_url, db = 0, decode_responses=True)
 
 def create_app(config_name):
     app = Flask(__name__)
