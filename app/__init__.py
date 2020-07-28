@@ -1,11 +1,13 @@
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_socketio import SocketIO
+from redis import Redis
 
 from config import config_options
 
 bootstrap = Bootstrap()
 socketio = SocketIO()
+red = Redis(host = 'localhost', port = 6379, db = 0, decode_responses=True)
 
 def create_app(config_name):
     app = Flask(__name__)

@@ -7,47 +7,55 @@
     <script>
         var socket = io();
         game_id = '{{game_id}}'
+        user_id = '{{user_id}}'
         can_play = false
         socket.on('connect', function() {
-            socket.emit('create game', {game_id: game_id});
+            socket.emit('create game', {game_id: game_id, user_id: user_id});
         });
+
+        socket.on('invite', (data)=>{
+            console.log(data)
+        })
 
         socket.on('play', (data)=>{
             console.log(data)
         })
-        socket.on('other play', (data)=>{
-            $('.loader').hide()
-            console.log(data)
-        })
 
+        socket.on('play again', (data)=>{
+            console.log(data)
+            socket.emit('create game', {game_id: game_id, user_id: user_id});
+
+        })
         socket.on('spot picked', (data)=>{
             
             console.log(data)
             cell = data['spot']
             show = data['show']
             $(`.button${cell}`).html(show)
-            $(`.button${cell}`).css('font-size',' 90px')
-            $(`.button${cell}`).css('color','white')
-            $(`.button${cell}`).css('line-height','20px')
-            
         })
+        socket.on('clear', ()=>{
+            for (let i = 1; i <= 9; i++){
+                $(`.button${i}`).html('')
+            }
+        })
+
         socket.on('start', (data)=>{
             can_play = true
             console.log(data)
             if (data['played']){
                 played_value = data['play']
                 $(`.button${played_value}`).removeClass('x-class')
-
             }
+            
             $('.button1').click(()=>{
                 if(can_play){
                     can_play = false
                     btn_select = document.getElementById('button1')
-                    // btn_select.innerText = 'X'
                     selected = 1
                     socket.emit('played', {
                         play: selected,
-                        game: game_id
+                        game: game_id,
+                        user: user_id
                     })
                 }
             })
@@ -58,7 +66,8 @@
                     selected = 2
                     socket.emit('played', {
                         play: selected,
-                        game: game_id
+                        game: game_id,
+                        user: user_id
                     })
                 }
                 
@@ -69,7 +78,8 @@
                     selected = 3
                     socket.emit('played', {
                         play: selected,
-                        game: game_id
+                        game: game_id,
+                        user: user_id
                     })
                 } 
             })
@@ -79,7 +89,8 @@
                     selected = 4
                     socket.emit('played', {
                         play: selected,
-                        game: game_id
+                        game: game_id,
+                        user: user_id
                     })
                 }
                 
@@ -90,7 +101,8 @@
                     selected = 5
                     socket.emit('played', {
                         play: selected,
-                        game: game_id
+                        game: game_id,
+                        user: user_id
                     })
                 }
                 
@@ -101,7 +113,8 @@
                     selected = 6
                     socket.emit('played', {
                         play: selected,
-                        game: game_id
+                        game: game_id,
+                        user: user_id
                     })
                 }
                 
@@ -112,7 +125,8 @@
                     selected = 7
                     socket.emit('played', {
                         play: selected,
-                        game: game_id
+                        game: game_id,
+                        user: user_id
                     })
                 }
                 
@@ -123,7 +137,8 @@
                     selected = 8
                     socket.emit('played', {
                         play: selected,
-                        game: game_id
+                        game: game_id,
+                        user: user_id
                     })
                 }
                 
@@ -134,7 +149,8 @@
                     selected = 9
                     socket.emit('played', {
                         play: selected,
-                        game: game_id
+                        game: game_id,
+                        user: user_id
                     })
                 }
                 
@@ -143,22 +159,26 @@
         
         socket.on('won', (winneer)=>{
             can_play = false
+            console.log(winneer)
             $('.results').append('Congrats!! You won!')
             $(`.results`).css('color','green')
             $(`.results`).css('font-size',' 24px')
         })
         socket.on('lost', (loser)=>{
             can_play = false
+            console.log(loser)
             $('.results').append('Boooo!! YOU LOST')
             $(`.results`).css('color','red')
             $(`.results`).css('font-size',' 24px')
         })
 
-        socket.on('draw', (data)=>{
+        socket.on('draw', (draw)=>{
             can_play = false
+            console.log(draw)
             $('.results').append('NO WINNER!!')
             $(`.results`).css('color','white')
             $(`.results`).css('font-size',' 24px')
+            socket.emit('create game', {game_id: game_id, user_id: user_id});
         })
 
         socket.on('back home', ()=>{
