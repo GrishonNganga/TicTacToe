@@ -12,7 +12,8 @@ socketio = SocketIO()
 redis_url = os.environ.get('REDIS_URL')
 print('This is the REDIS_URL')
 print(redis_url)
-red = Redis(host = redis_url, db = 0, decode_responses=True)
+red = Redis(host = 'redis://h:p6ac9d69bf4f9542a6754ffd1a5e320827f341a92d4eff245f6e3b6150f91a3c0@ec2-54-146-142-219.compute-1.amazonaws.com',port = 15219,  db = 0, decode_responses=True)
+
 
 def create_app(config_name):
     app = Flask(__name__)
