@@ -9,9 +9,26 @@
 {% block content %}
 <div class="container-fluid">
 
-    <form action="/" method="post">
-        <input class="btn btn-primary btn-lg" type="submit" name="newGame" value="Create your own Game"/>
-    </form>
+    <div class="row">
+        <div class="col">
+            <input class="btn btn-primary btn-lg join" type="submit" name="newGame" value="Join a game"/>
+        </div>
+    </div>
+    <div class="row">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Enter game pin">
+            </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <form action="/" method="post">
+                <input class="btn btn-primary btn-lg" type="submit" name="newGame" value="Create your own Game"/>
+            </form>
+        </div>
+    </div>
+   
+
+   
 
     
     <!-- <script src="https://www.youtube.com/iframe_api"></script> -->
