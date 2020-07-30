@@ -1,127 +1,214 @@
 from flask_socketio import SocketIO, emit, join_room, leave_room
-from flask import Flask, render_template, request, json
-from flask_session import Session
+from flask import Flask, render_template, request, json, url_for, redirect
+from itertools import permutations
 
 from . import socketio
-from itertools import permutations
+from . import red
+
 
 
 all_rooms = []
 rooms_data = []
 list_of_possible_wins = [
-            [1,2,3],
-            [4,5,6],
-            [7,8,9],
-            [1,4,7],
-            [2,5,8],
-            [3,6,9],
-            [3,5,7],
-            [1,5,9]
+            ['1','2','3'],
+            ['4','5','6'],
+            ['7','8','9'],
+            ['1','4','7'],
+            ['2','5','8'],
+            ['3','6','9'],
+            ['3','5','7'],
+            ['1','5','9']
         ]
-@socketio.on('my event')
-def handle_my_custom_event(json):
-    print('received json: ' + str(json['data']))
-    emit('my response', 'Nice', broadcast= True)
-
-@socketio.on('new message')
-def show_message(data):
-    emit('show message', data['data'], broadcast = True)
 
 @socketio.on('create game')
 def create_game(data):
-    room_id = data['game_id']
-    user_id = request.sid
-    user = [user_id]
+    game = data['game_id']
+    user = data['user_id']
+    print(red.get(game))
     
-    if all_rooms.count(room_id) > 0:
-        a_room_to_check = None
-        for room in rooms_data:
-            if room['id'] == room_id:
-                a_room_to_check = room
-            
-        if a_room_to_check is not None and len(a_room_to_check['users']) < 2:
-            users = a_room_to_check['users']
-            users.append(user_id)
-            a_room_to_check['game'] = {
-                'played_moves': [],
-                users[0]: [],
-                users[1]: []
-            }
-            join_room(a_room_to_check['id'])
+    if red.exists(game):
+        print('Game is live bruv!')
+        game_play = 'game_' + game
+        user_game = 'user_game_' + user
+        print(red.smembers(user_game))
+        played_moves = 'played_moves_' + game
 
-            emit('other play', 'Game about to start.', room = a_room_to_check['id'])
-            emit('start', {'played': False}, room = users[0])
+        if red.exists(game_play):
+            if red.hexists(game_play, 'p2'):
+                if  red.hget(game_play, 'p1') == user or red.hget(game_play, 'p2') == user:
+                    print('My id is')
+                    print(user)
+                    red.delete(user_game)
+                    red.delete(played_moves)
+                    p1_prev_scores = int(red.hget(game_play, 'p1W'))
+                    p2_prev_scores = int(red.hget(game_play, 'p2W'))
+                    total_games_played = int(red.hget(game_play, 'total'))
+                    
+                    print(total_games_played)
+                    if p1_prev_scores == 0 and p2_prev_scores == 0:
+                        socketio.emit('start', 'Player 1 starts.', room = red.hget(game_play, 'p1'))
+                    elif p1_prev_scores == p2_prev_scores:
+                        if total_games_played  % 2 != 0:
+                            socketio.emit('start', 'Your turn to start.', room = red.hget(game_play, 'p1'))
+                        else:
+                            socketio.emit('start', 'Your turn to start.', room = red.hget(game_play, 'p2'))
+                    elif p1_prev_scores > p2_prev_scores:
+                        socketio.emit('start', 'Winner starts.', room = red.hget(game_play, 'p1'))
+                    else:
+                        socketio.emit('start', 'Winner starts.', room = red.hget(game_play, 'p2')) 
+                else:
+                    join_room(user)
+                    socketio.emit('back home', room = user)
+                    leave_room(user)
+                    return 
+            else:
+                print("Good! You can join!!")
+
+                red.hset(game_play, 'p2', user)
+                red.hset(game_play, 'p2W', 0)
+                red.hset(game_play, 'p2L', 0)
+                red.hset(game_play, user_game, user_game)
+                print(red.hgetall(game_play))
+                join_room(game_play)
+                join_room(red.hget(game_play, 'p2'))
+
+
+                p1_prev_scores = int(red.hget(game_play, 'p1W'))
+                p2_prev_scores = int(red.hget(game_play, 'p2W'))
+                total_games_played = int(red.hget(game_play, 'total'))
+                
+                print(total_games_played)
+                if p1_prev_scores == 0 and p2_prev_scores == 0:
+                    socketio.emit('start', 'Player 1 starts.', room = red.hget(game_play, 'p1'))
+                elif p1_prev_scores == p2_prev_scores:
+                    if total_games_played  % 2 != 0:
+                        socketio.emit('start', 'Your turn to start.', room = red.hget(game_play, 'p1'))
+                    else:
+                        socketio.emit('start', 'Your turn to start.', room = red.hget(game_play, 'p2'))
+                elif p1_prev_scores > p2_prev_scores:
+                    socketio.emit('start', 'Winner starts.', room = red.hget(game_play, 'p1'))
+                else:
+                    socketio.emit('start', 'Winner starts.', room = red.hget(game_play, 'p2'))
         else:
-            emit('back home',  room = request.sid)
+            red.hset(game_play, 'p1', user)
+            red.hset(game_play, 'p1W', 0)
+            red.hset(game_play, 'p1L', 0)
+            red.hset(game_play, user_game, user_game)
+            red.hset(game_play, 'total', 0)
 
-    else:
-        a_room = {
-            'id': room_id,
-            'users': user
-        }
-        all_rooms.append(a_room['id'])
-        rooms_data.append(a_room)
+            print(red.hgetall(game_play))
+            join_room(game_play)
+            join_room(red.hget(game_play, 'p1'))
 
-        join_room(a_room['id'])
-
-        rooms = json.dumps(all_rooms)
-        emit('play', rooms,  room = user_id)
+            socketio.emit('invite', 'Invite your friend to play', room = game_play)
 
 @socketio.on('played')
-def play(data):
-    if all_rooms.count(data['game']) > 0:
-        room_to_play = None
-        for room in rooms_data:
-            for user in room['users']:
-                if user == request.sid:
-                    room_to_play = room
-                    game = room_to_play['game']
-                else:
-                    other_user = user
+def played_moves(data):
+    user = data['user']
+    game = data['game']
+    play = data['play']
+    user_play = 'user_game_' + user
+    
+    if red.exists(game): #Game is valid
+        game_play = 'game_' + game
+        played_moves = 'played_moves_' + game
 
-        if len(game['played_moves']) <= 8 :
-            if game['played_moves'].count(data['play']) < 1:
-                game[request.sid].append(data['play'])
-                game['played_moves'].append(data['play'])
+        
+        if red.hget(game_play,'p1') == user: #Check that player one is the one who has played. 
 
-                if request.sid == room_to_play['users'][0]:
-                    emit('spot picked', {'spot': data['play'], 'show': 'X'}, room = room_to_play['id'])
-                else:
-                    emit('spot picked', {'spot': data['play'], 'show': 'O'}, room = room_to_play['id'])
+            if red.scard(played_moves) < 9 : # No. of plays not exceeded.
 
+                if not red.sismember(played_moves, str(play)): #Move not played before.
+                    red.sadd(played_moves, str(play))
+                    red.sadd(user_play, str(play))
+                    socketio.emit('spot picked', {'spot': play, 'show': 'X'}, game_play )
+                    print(red.smembers(played_moves))
+                    print(red.smembers(user_play))
+                    user_plays = red.smembers(user_play)
 
-                all = list(permutations(game[request.sid], 3))
-                for i in all:
-                    for j in list_of_possible_wins:
-                        i = set(i)
-                        j = set(j)
-                        if i == j:
-                            print('Caught')
-                            print(i)
-                            emit('won', request.sid, room = request.sid)           
-                            emit('lost', request.sid, room = other_user )
-                            break
-                    break     
-                print(game)
-                other_player = None
-                for user in room_to_play['users']:
-                    if user != request.sid:    
-                        my_played_moves = json.dumps(game[user])
-                        if len(game['played_moves']) > 8:
-                            print('Game over for now.')
-                            print(game)
-                            emit('draw', room = room_to_play['id'])
-                            break
-                        emit('start',my_played_moves , room = user)
-                        break
+                    all = list(permutations(user_plays, 3))
+
+                    for i in all:
+                        for j in list_of_possible_wins:
+                            
+                            i = set(i)
+                            j = set(j)
+                            if i == j:
+                                print('Caught')
+                                print(i)
+                                red.delete(user_play)
+                                red.delete(played_moves)
+                                red.hincrby(game_play, 'p1W', amount = 1)
+                                red.hincrby(game_play, 'p2L', amount = 1)
+                                socketio.emit('clear', room = game_play)
+                                emit('won', 'Nigga you won', room = red.hget(game_play, 'p1') )           
+                                emit('lost', 'Yos a loser', room = red.hget(game_play, 'p2') )
+                                emit('play again', 'Do you want to play again?', room = game_play)
+                                return     
+                    if red.scard(played_moves) > 8:
+                        socketio.emit('draw', room = game_play )
+                        socketio.emit('clear', room = game_play)
+                    else:
+                        
+                        socketio.emit('start',{'message': 'Your turn'}, room = red.hget(game_play, 'p2'))
+
+                elif red.sismember(played_moves, str(play)): #Move already played.
+                    socketio.emit('start', {'played': True, 'message': 'Sorry that has already been played.'}, room = red.hget(game_play, 'p1'))
             else:
-                emit('start', {'played': True, 'play': data['play']} , room = request.sid)
+                red.delete(user_game)
+                red.delete(played_moves)
+                socketio.emit('draw','Oopsies it is a draw', room = game_play ) #No of plays exceeded.
+                socketio.emit('clear', room = game_play)
+                  
+        elif red.hget(game_play, 'p2') == user:
+            
+            if red.scard(played_moves) < 9 : # No. of plays not exceeded.
 
-        else:
-            emit('draw', room = room_to_play['id'])
-            print('Game over for now.')
-            print(game)
-    else:
+                if not red.sismember(played_moves, str(play)): #Move not played before.
 
-        #TODO Handle wrong game id -> (Wrong link)
-        emit('error', room = request.sid)
+                    red.sadd(played_moves, str(play))
+                    red.sadd(user_play, str(play))
+                    socketio.emit('spot picked', {'spot': play, 'show': 'O'}, game_play )
+                    print(red.smembers(played_moves))
+                    print(red.smembers(user_play))
+
+                    user_plays = red.smembers(user_play)
+
+                    all = list(permutations(user_plays, 3))
+
+                    for i in all:
+                        for j in list_of_possible_wins:
+                            
+                            i = set(i)
+                            j = set(j)
+
+                            if i == j:
+                                print('Caught')
+                                print(i)
+                                red.delete(user_play)
+                                red.delete(played_moves)
+                                red.hincrby(game_play, 'p2W', amount = 1)
+                                red.hincrby(game_play, 'p1L', amount = 1)
+                                socketio.emit('clear', room = game_play)
+                                emit('won', 'Nigga you won', room = red.hget(game_play, 'p2') )           
+                                emit('lost', 'Yos a loser', room = red.hget(game_play, 'p1') )
+                                emit('play again', 'Do you want to play again?', room = game_play)     
+
+                                return
+                    if red.scard(played_moves) > 8:
+                        socketio.emit('draw', room = game_play )
+                        socketio.emit('clear', room = game_play)
+                    else:
+                        
+                        socketio.emit('start',{'message': 'Your turn'}, room = red.hget(game_play, 'p1'))
+
+                elif red.sismember(played_moves, str(play)): #Move already played.
+                    socketio.emit('start', {'played': True, 'message': 'Sorry that has already been played.'}, room = red.hget(game_play, 'p2'))
+            else:
+
+                red.delete(user_play)
+                red.delete(played_moves)
+                socketio.emit('draw', room = game_play ) #No of plays exceeded.
+                socketio.emit('clear', room = game_play)
+
+

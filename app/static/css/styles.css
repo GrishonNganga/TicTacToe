@@ -1,116 +1,160 @@
-/*------Game styling------*/
-*{
-    background-color: black;
+/* Landing page styling! */
+.center-elem{
+    height: 45vh;
+    
 }
-
-.main-game {
-    height: 100%;
-    width: 100vw;
-    max-height: 100%;
-    max-width: 100vw;
-    overflow-y: hidden !important;
+.center-elem img{
+    width: 50%;
+    margin-left: 24%;
+}
+.center{
+    /* margin-left: 40%; */
+    width: 100%;
+    margin-left: 25%;
+    
     
 }
 
-.game {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    /* border: 2px solid #00000050; */
-    border-radius: 15px;
-    /* box-shadow: 0px 10px 19px 5px rgba(0,0,0,0.75); */
-
-    margin: 30px;
-
-    /*---Position---*/
-    /*position: absolute;*/
-    padding: 20px;
-    margin: 0 auto;
-    top: 50%;
-    left: 50%;
-    /* width: 60%;
-    height: 80%; */
-    /*transform: translate(-50%, -50%);*/
-    z-index: 123;
-    margin-top: 5%;
+.btn, .form-control{
+    border-radius: 0 !important;
     
 }
+.form-control, .or{
+    text-align: center;
+}
 
-.game-area {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    width: 300px;
-    height: 300px;
-    max-width: 300px;
-    max-height: 300px;
-    margin: 20px auto;
-    font-size: 60px;
+/* End of first page styling. */
+
+
+
+.game-body{
+  display: flex;
+  justify-content: center;
+}
+.modal{
+  display: block;
+}
+.board{
   
+  background-color: #adabaa;
+  border-radius: 10px;
+
+}
+.grid{
+  flex-basis: 100%;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+.cell{
+  display: flex;
+  width: 100px;
+  height: 100px;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+}
+
+.x::after{
+  content: '×';
+  font-size: 130px;
+  color: blue;    
+
+}
+
+.o::after{
+  content: '○';
+  font-size: 100px;
+  color: red;
+  font-weight: bold;
+}
+
+.score-card{
+  font-size: 24px;
+  text-align: center;
+}
+
+.p-1{
+  color: blue;
+  font-weight: bold;
+}
+.p-2{
+  color: red;
+  font-weight: bold;
+}
+
+@media screen and (min-width: 200px){
+  .cell{
+      width: 80px;
+      height: 80px;
+  }
+  .x::after{
+      font-size: 80px;
+  }
+  .o::after{
+      font-size: 50px;
+  }
+}
+
+
+/* First Page responsiveness styling */
+@media screen and (min-width: 500px){
+    .center-div{
+        margin-left: 37%;
+    }
+    .center{
+        margin-left: 0%;
+
+    }
+    .center-elem img{
+        width: 30%;
+        margin-left: 4%;
+    }
     
 }
 
-.game-btn {
-    background: #3b79ff !important;
-    border: 1px solid #3b79ff !important;
-    border-radius: 15px;
-    margin: 2px;
-    transition: all 0.5s;
-    display: block;
-    width: 100px;
-    height: 100px;
-}
-.create-game{
-    margin-left: 42%;
-    margin-top: 30%;
+/* This is the end of landing page styling. */
+
+
+/* Media Queries for the second view */
+
+@media screen and (min-width: 200px){
+  .cell{
+      width: 80px;
+      height: 80px;
+  }
+  .x::after{
+      font-size: 80px;
+  }
+  .o::after{
+      font-size: 50px;
+  }
 }
 
-.game-btn:hover, .create-game:hover {
-    transform: scale(1.1);
-    background: #ff8d3b !important;
-}
-.back a:hover{
-    color: #ff8d3b;
-}
-.share-link{
-    color: #3b79ff;
-    background-color: white;
-    margin-left: 33%;
-    width: 35%;
-    margin-top: 5%;
-    font-size: 20px;
-    text-align: center;
-    border-radius: 10px;
-    z-index: 20;
-    padding-top: 15px;
-    padding-bottom: 15px;
 
+@media screen and (min-width: 600px){
+  .cell{
+      width: 120px;
+      height: 120px;
+  }
+  .x::after{
+      font-size: 100px;
+  }
+  .o::after{
+      font-size: 80px;
+  }
 }
 
-.back{
-    font-size: 48px;
-    color: white;
-    margin-left: 5%;
-    margin-top: 2%;
-    position: fixed;
-}
-
-.back a{
-    color: white;
-}
-
-.player-area {
-    margin: 20px auto;
-    height: 200px;
-    margin-left: 41%;
-    margin-top: 10%;
-}
-
-.show-error{
-    display: none;
-    position: fixed;
-    top: 0;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    font-size: 24px;
-    text-align: center;
+@media screen and (min-width: 600px){
+  .cell{
+      width: 180px;
+      height: 180px;
+  }
+  .x::after{
+      font-size: 130px;
+  }
+  .o::after{
+      font-size: 100px;
+  }
 }
