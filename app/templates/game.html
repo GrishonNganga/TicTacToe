@@ -7,47 +7,62 @@
     <script>
         var socket = io();
         game_id = '{{game_id}}'
+        user_id = '{{user_id}}'
         can_play = false
         socket.on('connect', function() {
-            socket.emit('create game', {game_id: game_id});
+            socket.emit('create game', {game_id: game_id, user_id: user_id});
         });
+
+        socket.on('invite', (data)=>{
+            console.log(data)
+        })
 
         socket.on('play', (data)=>{
             console.log(data)
         })
-        socket.on('other play', (data)=>{
-            $('.loader').hide()
-            console.log(data)
-        })
 
+        socket.on('play again', (data)=>{
+            console.log(data)
+            socket.emit('create game', {game_id: game_id, user_id: user_id});
+
+        })
         socket.on('spot picked', (data)=>{
             
             console.log(data)
             cell = data['spot']
             show = data['show']
-            $(`.button${cell}`).html(show)
-            $(`.button${cell}`).css('font-size',' 90px')
-            $(`.button${cell}`).css('color','white')
-            $(`.button${cell}`).css('line-height','20px')
+            if (show == 'X'){
+                $(`.button${cell}`).addClass('x')
+            }else{
+                $(`.button${cell}`).addClass('o')
+            }
             
         })
+        socket.on('clear', ()=>{
+            for (let i = 1; i <= 9; i++){
+                $(`.button${i}`).removeClass('x')
+                $(`.button${i}`).removeClass('o')
+
+            }
+        })
+
         socket.on('start', (data)=>{
             can_play = true
             console.log(data)
             if (data['played']){
                 played_value = data['play']
                 $(`.button${played_value}`).removeClass('x-class')
-
             }
+            
             $('.button1').click(()=>{
                 if(can_play){
                     can_play = false
                     btn_select = document.getElementById('button1')
-                    // btn_select.innerText = 'X'
                     selected = 1
                     socket.emit('played', {
                         play: selected,
-                        game: game_id
+                        game: game_id,
+                        user: user_id
                     })
                 }
             })
@@ -58,7 +73,8 @@
                     selected = 2
                     socket.emit('played', {
                         play: selected,
-                        game: game_id
+                        game: game_id,
+                        user: user_id
                     })
                 }
                 
@@ -69,7 +85,8 @@
                     selected = 3
                     socket.emit('played', {
                         play: selected,
-                        game: game_id
+                        game: game_id,
+                        user: user_id
                     })
                 } 
             })
@@ -79,7 +96,8 @@
                     selected = 4
                     socket.emit('played', {
                         play: selected,
-                        game: game_id
+                        game: game_id,
+                        user: user_id
                     })
                 }
                 
@@ -90,7 +108,8 @@
                     selected = 5
                     socket.emit('played', {
                         play: selected,
-                        game: game_id
+                        game: game_id,
+                        user: user_id
                     })
                 }
                 
@@ -101,7 +120,8 @@
                     selected = 6
                     socket.emit('played', {
                         play: selected,
-                        game: game_id
+                        game: game_id,
+                        user: user_id
                     })
                 }
                 
@@ -112,7 +132,8 @@
                     selected = 7
                     socket.emit('played', {
                         play: selected,
-                        game: game_id
+                        game: game_id,
+                        user: user_id
                     })
                 }
                 
@@ -123,7 +144,8 @@
                     selected = 8
                     socket.emit('played', {
                         play: selected,
-                        game: game_id
+                        game: game_id,
+                        user: user_id
                     })
                 }
                 
@@ -134,7 +156,8 @@
                     selected = 9
                     socket.emit('played', {
                         play: selected,
-                        game: game_id
+                        game: game_id,
+                        user: user_id
                     })
                 }
                 
@@ -143,22 +166,24 @@
         
         socket.on('won', (winneer)=>{
             can_play = false
-            $('.results').append('Congrats!! You won!')
-            $(`.results`).css('color','green')
-            $(`.results`).css('font-size',' 24px')
+            console.log(winneer)
+            
         })
         socket.on('lost', (loser)=>{
             can_play = false
+            console.log(loser)
             $('.results').append('Boooo!! YOU LOST')
             $(`.results`).css('color','red')
             $(`.results`).css('font-size',' 24px')
         })
 
-        socket.on('draw', (data)=>{
+        socket.on('draw', (draw)=>{
             can_play = false
+            console.log(draw)
             $('.results').append('NO WINNER!!')
             $(`.results`).css('color','white')
             $(`.results`).css('font-size',' 24px')
+            socket.emit('create game', {game_id: game_id, user_id: user_id});
         })
 
         socket.on('back home', ()=>{
@@ -173,45 +198,72 @@
 
 {% block content %}
 
-<head>
-    <style>
-        body {
-            overflow: hidden;
-        }
-    </style>
-</head>
-<div class="main-game">
-    <div class="game">
-        <div class="alert alert-danger show-error">
-            <p class="show-error-txt"></p>
+<body class="game-body">
+    
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              ...
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
         </div>
-        <div class="results">
-
-        </div>
-
-        <div class="game-area">
-            <button class="btn button1 game-btn"></button>
-            <button class="btn button2 game-btn"></button>
-            <button class="btn button3 game-btn"></button>
-            <button class="btn button4 game-btn"></button>
-            <button class="btn button5 game-btn"></button>
-            <button class="btn button6 game-btn"></button>
-            <button class="btn button7 game-btn"></button>
-            <button class="btn button8 game-btn"></button>
-            <button class="btn button9 game-btn"></button>
-        </div>
-    </div>
-        
-    <div class="share-link">
-        {{url}}
-
-    </div>
-    <div class="spinner-border text-warning loader" role="status">
-        <span class="sr-only">Loading...</span>
       </div>
-    <div class="player-area">       
-        <audio controls></audio>
+    <div class="score-card mt-5">
+        <div class="row">
+            <div class="col p-1">
+                <div class="row">
+                    <div class="col pt-4 ml-4">
+                        Player 1
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col pb-4 ml-4">
+                        0
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col p-2">
+                <div class="row">
+                    <div class="col pt-4 ml-4">
+                        Player 2
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col pb-4 ml-4">
+                        0
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="board mt-5">
+            
+            <div class="grid">
+                <div class="cell button1"></div>
+                <div class="cell button2"></div>
+                <div class="cell button3"></div>
+                <div class="cell button4"></div>
+                <div class="cell button5"></div>
+                <div class="cell button6"></div>
+                <div class="cell button7"></div>
+                <div class="cell button8"></div>
+                <div class="cell button9"></div>
+            </div>
+        </div>
     </div>
-    <div class="footer"></div>
-</div>
+
+    
+    
+</body>
 {% endblock %}
