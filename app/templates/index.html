@@ -8,28 +8,37 @@
 {%  endblock %}
 {% block content %}
 <div class="container-fluid">
+    <div class="center-elem">
+        <div class="row">
+            <div class="col center-div mt-5">
+                <img src="{{url_for('static', filename = 'images/tic.png')}}" alt="Tic pic" class="center">
+            </div>
+        </div>
+        
+    </div>
+    <div class="row">
+        <div class="col-8 col-sm-3 center-div mb-4">
+            <input type="text" name="game-id-input-name" id="game-id-input" placeholder="Enter Game ID" class="center form-control">
+        </div>
+    </div>
 
     <div class="row">
-        <div class="col">
-            <input class="btn btn-primary btn-lg join" type="submit" name="newGame" value="Join a game"/>
+        <div class="col-8 col-sm-3 center-div mb-4">
+           <button class="btn btn-danger center">Join Game</button>
         </div>
     </div>
     <div class="row">
-            <div class="col">
-                <input type="text" class="form-control" placeholder="Enter game pin">
-            </div>
+        <div class="col-8 col-sm-3 center-div mb-2">
+            <p class="center or">or</p>
+        </div>
     </div>
     <div class="row">
-        <div class="col">
+        <div class="col-8 col-sm-3 center-div">
             <form action="/" method="post">
-                <input class="btn btn-primary btn-lg" type="submit" name="newGame" value="Create your own Game"/>
+                <input class="btn btn-primary center" type="submit" name="newGame" value="Start your Game"/>
             </form>
         </div>
     </div>
-   
-
-   
-
     
     <!-- <script src="https://www.youtube.com/iframe_api"></script> -->
     <script src="https://cdn.rawgit.com/labnol/files/master/yt.js"></script>
