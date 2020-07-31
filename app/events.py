@@ -79,6 +79,7 @@ def create_game(data):
                 
                 print(total_games_played)
                 if p1_prev_scores == 0 and p2_prev_scores == 0:
+                    socketio.emit('connected', 'Successfully passed data',  room = game_play)
                     socketio.emit('start', 'Player 1 starts.', room = red.hget(game_play, 'p1'))
                 elif p1_prev_scores == p2_prev_scores:
                     if total_games_played  % 2 != 0:

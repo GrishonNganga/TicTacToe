@@ -1,0 +1,76 @@
+
+.btn, .form-control{
+    border-radius: 0 !important;
+    
+}
+
+.modal{
+  display: initial;
+}
+
+.game-body{
+  display: flex;
+  justify-content: center;
+}
+
+.board{
+  
+  background-color: #adabaa;
+  border-radius: 10px;
+
+}
+.grid{
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+.cell{
+  display: flex;
+  width: 180px;
+  height: 180px;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+}
+
+.x::after{
+  content: '×';
+  font-size: 130px;
+  color: blue;    
+
+}
+
+.o::after{
+  content: '○';
+  font-size: 100px;
+  color: red;
+  font-weight: bold;
+}
+
+.score-card{
+  font-size: 24px;
+  text-align: center;
+}
+
+.p-1{
+  color: blue;
+  font-weight: bold;
+}
+.p-2{
+  color: red;
+  font-weight: bold;
+}
+.load{
+    display: flex;
+    justify-content: center;
+}
+
+::placeholder{
+    font-size: 24px;
+    color: gray;
+    font-weight: bold;
+}
+.hide{
+    display: none;
+}
