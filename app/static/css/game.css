@@ -1,7 +1,4 @@
 
-*{
-    font-size: 36px;
-}
 .btn, .form-control{
     border-radius: 0 !important;
     
@@ -77,3 +74,8 @@
     display: none;
 }
 
+@media screen and (max-width: 576px){    
+    *{
+        font-size: 24px;
+    }
+}
