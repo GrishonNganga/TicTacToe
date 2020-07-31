@@ -1,4 +1,7 @@
 
+*{
+    font-size: 36px;
+}
 .btn, .form-control{
     border-radius: 0 !important;
     
