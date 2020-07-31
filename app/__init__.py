@@ -13,6 +13,7 @@ redis_url = os.environ.get('REDIS_URL')
 print('This is the REDIS_URL')
 print(redis_url)
 red = redis.from_url(redis_url, decode_responses = True)
+# red = redis.Redis(host = 'localhost', port = 6379, db = 0, decode_responses = True)
 def create_app(config_name):
     app = Flask(__name__)
 

@@ -7,7 +7,6 @@
 .modal{
   display: initial;
 }
-
 .game-body{
   display: flex;
   justify-content: center;
@@ -20,6 +19,7 @@
 
 }
 .grid{
+  flex-basis: 100%;
   display: grid;
   grid-gap: 10px;
   grid-template-columns: repeat(3, 1fr);
@@ -27,8 +27,8 @@
 }
 .cell{
   display: flex;
-  width: 180px;
-  height: 180px;
+  width: 250px;
+  height: 250px;
   background-color: white;
   justify-content: center;
   align-items: center;
@@ -38,7 +38,6 @@
   content: '×';
   font-size: 130px;
   color: blue;    
-
 }
 
 .o::after{
@@ -74,3 +73,4 @@
 .hide{
     display: none;
 }
+
