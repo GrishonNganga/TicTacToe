@@ -18,7 +18,6 @@ def index():
     if request.method == 'POST':
         unique_id = str(uuid.uuid1())
         if not red.exists(unique_id):
-            print("Nada exists")
             red.set(unique_id, unique_id)
             return redirect(url_for('main.create_game', id = unique_id))
         else:
@@ -35,7 +34,6 @@ def create_game(id):
 
     if red.exists(id):
         user_id = str(uuid.uuid1())
-        print("Now exists")
 
         return render_template('game.html', game_id = id, user_id = user_id, title = title)
     
