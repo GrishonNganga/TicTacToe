@@ -1,6 +1,7 @@
 from flask_socketio import SocketIO, emit, join_room, leave_room
 from flask import Flask, render_template, request, json, url_for, redirect
 from itertools import permutations
+import jsonpickle
 
 from . import socketio
 from . import red
@@ -142,8 +143,11 @@ def played_moves(data):
                                 red.hincrby(game_play, 'p1W', amount = 1)
                                 red.hincrby(game_play, 'p2L', amount = 1)
                                 socketio.emit('clear', room = game_play)
-                                emit('won', 'Nigga you won', room = red.hget(game_play, 'p1') )           
-                                emit('lost', 'Yos a loser', room = red.hget(game_play, 'p2') )
+                                win_play_str = ''
+                                for num in j:
+                                    win_play_str += str(num) + ','
+                                emit('won', {'winner':'p1','set': win_play_str}, room = red.hget(game_play, 'p1') )           
+                                emit('lost',{'loser':'p2', 'set': win_play_str}, room = red.hget(game_play, 'p2') )
                                 emit('play again', 'Do you want to play again?', room = game_play)
                                 return     
                     if red.scard(played_moves) > 8:
@@ -191,8 +195,11 @@ def played_moves(data):
                                 red.hincrby(game_play, 'p2W', amount = 1)
                                 red.hincrby(game_play, 'p1L', amount = 1)
                                 socketio.emit('clear', room = game_play)
-                                emit('won', 'Nigga you won', room = red.hget(game_play, 'p2') )           
-                                emit('lost', 'Yos a loser', room = red.hget(game_play, 'p1') )
+                                win_play_str = ''
+                                for num in j:
+                                    win_play_str += str(num) + ','
+                                emit('won', {'winner': 'p2', 'set': win_play_str}, room = red.hget(game_play, 'p2') )           
+                                emit('lost', {'loser': 'p1', 'set': win_play_str}, room = red.hget(game_play, 'p1') )
                                 emit('play again', 'Do you want to play again?', room = game_play)     
 
                                 return

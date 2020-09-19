@@ -52,6 +52,19 @@
   text-align: center;
 }
 
+.blue::after{
+  color: blue;
+}
+
+.red::after{
+  color: red;
+}
+.black::after{
+  color: black;
+}
+.default{
+  color: gray;
+}
 .p-1{
   color: blue;
   font-weight: bold;

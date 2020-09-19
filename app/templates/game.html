@@ -32,6 +32,8 @@
 
         socket.on('play again', (data)=>{
             console.log(data)
+            $('.cell').removeClass('x')
+            $('.cell').removeClass('o')
             socket.emit('create game', {game_id: game_id, user_id: user_id});
 
         })
@@ -44,17 +46,8 @@
                 $(`.button${cell}`).addClass('x')
             }else{
                 $(`.button${cell}`).addClass('o')
-            }
-            
+            } 
         })
-        socket.on('clear', ()=>{
-            for (let i = 1; i <= 9; i++){
-                $(`.button${i}`).removeClass('x')
-                $(`.button${i}`).removeClass('o')
-
-            }
-        })
-
         socket.on('start', (data)=>{
             can_play = true
             console.log(data)
@@ -173,17 +166,52 @@
             })
         })
         
-        socket.on('won', (winneer)=>{
+        socket.on('won', (data)=>{
             can_play = false
-            console.log(winneer)
-            
+            console.log(data)
+            let plays = data['set'].split(',')
+
+            if (data['winner'] == 'p2'){
+                for( letter in plays){
+                
+                current_p2 = parseInt($('.score-p2').text())
+                }
+                current_p2 = current_p2 + 1
+                $('.score-p2').text("")
+                $('.score-p2').text(current_p2)
+                
+            }else{
+                for( letter in plays){
+                
+                current_p1 = parseInt($('.score-p1').text())
+                }
+                current_p1 = current_p1 + 1
+                $('.score-p1').text("")
+                $('.score-p1').text(current_p1)
+            }
         })
-        socket.on('lost', (loser)=>{
+        socket.on('lost', (data)=>{
             can_play = false
-            console.log(loser)
-            $('.results').append('Boooo!! YOU LOST')
-            $(`.results`).css('color','red')
-            $(`.results`).css('font-size',' 24px')
+            let plays = data['set'].split(',')
+            console.log(plays)
+
+            if (data['loser'] == 'p2'){
+                for( letter in plays){
+               
+                    current_p1 = parseInt($('.score-p1').text())
+                }
+                current_p1 = current_p1 + 1
+                $('.score-p1').text("")
+                $('.score-p1').text(current_p1)
+            }else{
+                for( letter in plays){
+               
+                    current_p2 = parseInt($('.score-p2').text())
+                }
+                current_p2 = current_p2 + 1
+                $('.score-p2').text("")
+                $('.score-p2').text(current_p2)
+            }
         })
 
         socket.on('draw', (draw)=>{
@@ -239,7 +267,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col ml-4">
+                    <div class="col ml-4 score-p1">
                         0
                     </div>
                 </div>
@@ -252,7 +280,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col  ml-4">
+                    <div class="col  ml-4 score-p2">
                         0
                     </div>
                 </div>
